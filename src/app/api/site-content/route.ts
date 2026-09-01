@@ -46,13 +46,13 @@ export async function GET() {
           data.content?.searchFilter ||
           defaultContent.searchFilter,
         footer: data.footer || data.content?.footer || defaultContent.footer,
-        offices: data.offices || data.content?.offices || defaultContent.offices,
+        offices: data.advisory?.offices || data.offices || defaultContent.offices,
         whyChoose:
+          data.advisory?.whyChoose ||
           data.why_choose ||
           data.whyChoose ||
-          data.content?.whyChoose ||
           defaultContent.whyChoose,
-        about: data.about || data.content?.about || defaultContent.about,
+        about: data.advisory?.about || data.about || defaultContent.about,
         updatedAt: data.updated_at || defaultContent.updatedAt,
       };
 
@@ -87,9 +87,11 @@ export async function PUT(req: NextRequest) {
         hero: updated.hero,
         search_filter: updated.searchFilter,
         footer: updated.footer,
-        offices: updated.offices,
-        why_choose: updated.whyChoose,
-        about: updated.about,
+        advisory: {
+          about: updated.about,
+          offices: updated.offices,
+          whyChoose: updated.whyChoose,
+        },
         updated_at: new Date().toISOString(),
       });
 

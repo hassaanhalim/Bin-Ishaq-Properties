@@ -239,6 +239,35 @@ export const DEFAULT_SITE_CONTENT: SiteContent = {
     stat2Label: 'Developer Transfer Support',
     stat3Value: 'Zero',
     stat3Label: 'Hidden Surcharges',
+    dealers: [
+      {
+        id: '1',
+        name: 'Kamran Ishaq',
+        role: 'Managing Principal — MPCHS & ZEDEM Projects',
+        bio: 'Over 18 years specializing in master-planned society acquisitions, balloting procedures, and developer transfers.',
+        image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
+        phone: '+92 315 5735785',
+        email: 'farhanullah3333@gmail.com',
+      },
+      {
+        id: '2',
+        name: 'Sara Ishaq',
+        role: 'Head of Overseas Client Desks & File Transfers',
+        bio: 'Dedicated advisory for overseas Pakistanis in UAE, UK, and North America managing remote society file transactions.',
+        image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80',
+        phone: '+92 315 5735785',
+        email: 'farhanullah3333@gmail.com',
+      },
+      {
+        id: '3',
+        name: 'Tariq Mehmood',
+        role: 'Director of On-Ground Verification & Commercial Advisory',
+        bio: 'Specialist in physical plot demarcation, commercial plaza ROI, and DHA & Bahria Town market intelligence.',
+        image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
+        phone: '+92 315 5735785',
+        email: 'farhanullah3333@gmail.com',
+      },
+    ],
   },
   searchFilter: {
     locations: [

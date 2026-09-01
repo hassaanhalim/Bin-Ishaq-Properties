@@ -39,6 +39,16 @@ export interface OfficeLocation {
   email: string;
 }
 
+export interface DealerMember {
+  id: string;
+  name: string;
+  role: string;
+  bio: string;
+  image: string;
+  phone?: string;
+  email?: string;
+}
+
 export interface AboutPageContent {
   eyebrow: string;
   heading: string;
@@ -50,6 +60,7 @@ export interface AboutPageContent {
   stat2Label: string;
   stat3Value: string;
   stat3Label: string;
+  dealers?: DealerMember[];
 }
 
 export interface FilterOption {

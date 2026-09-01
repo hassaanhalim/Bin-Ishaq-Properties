@@ -165,6 +165,89 @@ export default function SiteContentEditorPage() {
     });
   };
 
+  // Helper methods for Offices
+  const addOffice = () => {
+    if (!content) return;
+    const newOffice = {
+      id: Date.now().toString(),
+      city: 'New Regional Branch',
+      address: 'Main Commercial Hub, Islamabad',
+      phone: '+92 315 5735785',
+      whatsapp: '923155735785',
+      email: 'farhanullah3333@gmail.com',
+    };
+    setContent({
+      ...content,
+      offices: [...(content.offices || []), newOffice],
+    });
+  };
+
+  const updateOffice = (index: number, field: string, val: string) => {
+    if (!content) return;
+    const updated = [...(content.offices || [])];
+    updated[index] = { ...updated[index], [field]: val };
+    setContent({
+      ...content,
+      offices: updated,
+    });
+  };
+
+  const removeOffice = (index: number) => {
+    if (!content) return;
+    const updated = (content.offices || []).filter((_, i) => i !== index);
+    setContent({
+      ...content,
+      offices: updated,
+    });
+  };
+
+  // Helper methods for Dealers / Leadership
+  const addDealer = () => {
+    if (!content) return;
+    const newDealer = {
+      id: Date.now().toString(),
+      name: 'New Authorized Advisor',
+      role: 'Property Consultant & Transfer Specialist',
+      bio: 'Dedicated advisory for housing society investments, file procedures, and verified property demarcation.',
+      image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
+      phone: '+92 315 5735785',
+      email: 'farhanullah3333@gmail.com',
+    };
+    const currentDealers = content.about?.dealers || [];
+    setContent({
+      ...content,
+      about: {
+        ...content.about,
+        dealers: [...currentDealers, newDealer],
+      },
+    });
+  };
+
+  const updateDealer = (index: number, field: string, val: string) => {
+    if (!content) return;
+    const currentDealers = [...(content.about?.dealers || [])];
+    currentDealers[index] = { ...currentDealers[index], [field]: val };
+    setContent({
+      ...content,
+      about: {
+        ...content.about,
+        dealers: currentDealers,
+      },
+    });
+  };
+
+  const removeDealer = (index: number) => {
+    if (!content) return;
+    const currentDealers = (content.about?.dealers || []).filter((_, i) => i !== index);
+    setContent({
+      ...content,
+      about: {
+        ...content.about,
+        dealers: currentDealers,
+      },
+    });
+  };
+
   if (loading || !content) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
@@ -951,51 +1034,90 @@ export default function SiteContentEditorPage() {
 
         {/* ================= TAB 5: OFFICES ================= */}
         {activeTab === 'offices' && (
-          <div className="bg-[#0B1320] border border-slate-800 p-6 space-y-5">
-            <h3 className="text-base font-bold text-white border-b border-slate-800 pb-3">
-              Regional Office Locations ({content.offices.length})
-            </h3>
+          <div className="bg-[#0B1320] border border-slate-800 rounded-2xl p-6 space-y-6">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+              <div>
+                <h3 className="text-base font-bold text-white">
+                  Regional Office Locations ({(content.offices || []).length})
+                </h3>
+                <p className="text-xs text-slate-400 mt-0.5">
+                  Manage physical branches, local hotlines, and desk contacts.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={addOffice}
+                className="flex items-center gap-1.5 bg-white hover:bg-slate-100 text-[#0B1320] font-extrabold text-xs px-3.5 py-2 rounded-xl transition cursor-pointer shadow"
+              >
+                <Plus className="w-3.5 h-3.5" />
+                <span>Add New Office</span>
+              </button>
+            </div>
 
-            <div className="space-y-6">
-              {content.offices.map((office, idx) => (
-                <div key={office.id || idx} className="bg-[#141E30] border border-slate-700 p-4 space-y-3">
-                  <span className="text-xs font-extrabold text-white block">
-                    Office #{idx + 1}
-                  </span>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <input
-                      type="text"
-                      placeholder="City / Title"
-                      value={office.city}
-                      onChange={(e) => {
-                        const updated = [...content.offices];
-                        updated[idx] = { ...updated[idx], city: e.target.value };
-                        setContent({ ...content, offices: updated });
-                      }}
-                      className="bg-[#0B1320] border border-slate-700 p-2 text-xs text-white font-bold"
-                    />
-                    <input
-                      type="text"
-                      placeholder="Phone"
-                      value={office.phone}
-                      onChange={(e) => {
-                        const updated = [...content.offices];
-                        updated[idx] = { ...updated[idx], phone: e.target.value };
-                        setContent({ ...content, offices: updated });
-                      }}
-                      className="bg-[#0B1320] border border-slate-700 p-2 text-xs text-white"
-                    />
-                    <input
-                      type="text"
-                      placeholder="Physical Address"
-                      value={office.address}
-                      onChange={(e) => {
-                        const updated = [...content.offices];
-                        updated[idx] = { ...updated[idx], address: e.target.value };
-                        setContent({ ...content, offices: updated });
-                      }}
-                      className="sm:col-span-2 bg-[#0B1320] border border-slate-700 p-2 text-xs text-white"
-                    />
+            <div className="space-y-4">
+              {(content.offices || []).map((office, idx) => (
+                <div
+                  key={office.id || idx}
+                  className="bg-[#141E30] border border-slate-700 rounded-xl p-4 space-y-3"
+                >
+                  <div className="flex items-center justify-between border-b border-slate-700/60 pb-2">
+                    <span className="text-xs font-extrabold text-white">
+                      Office #{idx + 1}: {office.city || 'Untitled Branch'}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => removeOffice(idx)}
+                      className="text-rose-400 hover:text-rose-300 text-xs font-bold flex items-center gap-1 cursor-pointer transition px-2 py-1 bg-rose-500/10 rounded-lg"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                      <span>Delete Office</span>
+                    </button>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                    <div className="space-y-1">
+                      <label className="text-[11px] font-bold text-slate-300">City / Title</label>
+                      <input
+                        type="text"
+                        placeholder="e.g. Islamabad Head Office"
+                        value={office.city}
+                        onChange={(e) => updateOffice(idx, 'city', e.target.value)}
+                        className="w-full bg-[#0B1320] border border-slate-700 rounded-lg p-2.5 text-xs text-white font-bold"
+                      />
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-[11px] font-bold text-slate-300">Phone</label>
+                      <input
+                        type="text"
+                        placeholder="+92 315 5735785"
+                        value={office.phone}
+                        onChange={(e) => updateOffice(idx, 'phone', e.target.value)}
+                        className="w-full bg-[#0B1320] border border-slate-700 rounded-lg p-2.5 text-xs text-white"
+                      />
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-[11px] font-bold text-slate-300">WhatsApp / Direct</label>
+                      <input
+                        type="text"
+                        placeholder="923155735785"
+                        value={office.whatsapp || ''}
+                        onChange={(e) => updateOffice(idx, 'whatsapp', e.target.value)}
+                        className="w-full bg-[#0B1320] border border-slate-700 rounded-lg p-2.5 text-xs text-white"
+                      />
+                    </div>
+
+                    <div className="sm:col-span-2 lg:col-span-3 space-y-1">
+                      <label className="text-[11px] font-bold text-slate-300">Physical Address</label>
+                      <input
+                        type="text"
+                        placeholder="Plot #, Block, Society, City"
+                        value={office.address}
+                        onChange={(e) => updateOffice(idx, 'address', e.target.value)}
+                        className="w-full bg-[#0B1320] border border-slate-700 rounded-lg p-2.5 text-xs text-white"
+                      />
+                    </div>
                   </div>
                 </div>
               ))}
@@ -1005,7 +1127,7 @@ export default function SiteContentEditorPage() {
 
         {/* ================= TAB 6: WHY CHOOSE US ================= */}
         {activeTab === 'why' && (
-          <div className="bg-[#0B1320] border border-slate-800 p-6 space-y-5">
+          <div className="bg-[#0B1320] border border-slate-800 rounded-2xl p-6 space-y-5">
             <h3 className="text-base font-bold text-white border-b border-slate-800 pb-3">
               Why Discerning Clients Choose Us
             </h3>
@@ -1022,7 +1144,7 @@ export default function SiteContentEditorPage() {
                       whyChoose: { ...content.whyChoose, eyebrow: e.target.value },
                     })
                   }
-                  className="w-full bg-[#141E30] border border-slate-700 p-2.5 text-xs text-white"
+                  className="w-full bg-[#141E30] border border-slate-700 rounded-xl p-2.5 text-xs text-white"
                 />
               </div>
 
@@ -1037,7 +1159,7 @@ export default function SiteContentEditorPage() {
                       whyChoose: { ...content.whyChoose, heading: e.target.value },
                     })
                   }
-                  className="w-full bg-[#141E30] border border-slate-700 p-2.5 text-xs text-white"
+                  className="w-full bg-[#141E30] border border-slate-700 rounded-xl p-2.5 text-xs text-white"
                 />
               </div>
 
@@ -1052,7 +1174,7 @@ export default function SiteContentEditorPage() {
                       whyChoose: { ...content.whyChoose, description: e.target.value },
                     })
                   }
-                  className="w-full bg-[#141E30] border border-slate-700 p-2.5 text-xs text-white"
+                  className="w-full bg-[#141E30] border border-slate-700 rounded-xl p-2.5 text-xs text-white"
                 />
               </div>
 
@@ -1060,7 +1182,7 @@ export default function SiteContentEditorPage() {
                 <h4 className="text-xs font-bold text-white uppercase">Key Pillars (3 Features)</h4>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {content.whyChoose.points.map((pt, idx) => (
-                    <div key={pt.id || idx} className="bg-[#141E30] border border-slate-700 p-3.5 space-y-2">
+                    <div key={pt.id || idx} className="bg-[#141E30] border border-slate-700 rounded-xl p-3.5 space-y-2">
                       <input
                         type="text"
                         placeholder="Feature Title"
@@ -1073,7 +1195,7 @@ export default function SiteContentEditorPage() {
                             whyChoose: { ...content.whyChoose, points: updated },
                           });
                         }}
-                        className="w-full bg-[#0B1320] border border-slate-700 p-2 text-xs text-white font-bold"
+                        className="w-full bg-[#0B1320] border border-slate-700 rounded-lg p-2 text-xs text-white font-bold"
                       />
                       <textarea
                         rows={2}
@@ -1087,7 +1209,7 @@ export default function SiteContentEditorPage() {
                             whyChoose: { ...content.whyChoose, points: updated },
                           });
                         }}
-                        className="w-full bg-[#0B1320] border border-slate-700 p-2 text-xs text-slate-300 font-medium"
+                        className="w-full bg-[#0B1320] border border-slate-700 rounded-lg p-2 text-xs text-slate-300 font-medium"
                       />
                     </div>
                   ))}
@@ -1099,153 +1221,268 @@ export default function SiteContentEditorPage() {
 
         {/* ================= TAB 7: ABOUT PAGE ================= */}
         {activeTab === 'about' && (
-          <div className="bg-[#0B1320] border border-slate-800 p-6 space-y-5">
-            <h3 className="text-base font-bold text-white border-b border-slate-800 pb-3">
-              About Page Narrative & Heritage Statistics
-            </h3>
+          <div className="bg-[#0B1320] border border-slate-800 rounded-2xl p-6 space-y-8">
+            <div>
+              <h3 className="text-base font-bold text-white border-b border-slate-800 pb-3">
+                About Page Narrative &amp; Heritage Statistics
+              </h3>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-300">Eyebrow</label>
-                <input
-                  type="text"
-                  value={content.about.eyebrow}
-                  onChange={(e) =>
-                    setContent({
-                      ...content,
-                      about: { ...content.about, eyebrow: e.target.value },
-                    })
-                  }
-                  className="w-full bg-[#141E30] border border-slate-700 p-2.5 text-xs text-white"
-                />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-slate-300">Eyebrow</label>
+                  <input
+                    type="text"
+                    value={content.about.eyebrow}
+                    onChange={(e) =>
+                      setContent({
+                        ...content,
+                        about: { ...content.about, eyebrow: e.target.value },
+                      })
+                    }
+                    className="w-full bg-[#141E30] border border-slate-700 rounded-xl p-2.5 text-xs text-white"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-slate-300">Main Heading</label>
+                  <input
+                    type="text"
+                    value={content.about.heading}
+                    onChange={(e) =>
+                      setContent({
+                        ...content,
+                        about: { ...content.about, heading: e.target.value },
+                      })
+                    }
+                    className="w-full bg-[#141E30] border border-slate-700 rounded-xl p-2.5 text-xs text-white"
+                  />
+                </div>
+
+                <div className="sm:col-span-2 space-y-1.5">
+                  <label className="text-xs font-bold text-slate-300">Story Paragraph 1</label>
+                  <textarea
+                    rows={3}
+                    value={content.about.storyP1}
+                    onChange={(e) =>
+                      setContent({
+                        ...content,
+                        about: { ...content.about, storyP1: e.target.value },
+                      })
+                    }
+                    className="w-full bg-[#141E30] border border-slate-700 rounded-xl p-2.5 text-xs text-white"
+                  />
+                </div>
+
+                <div className="sm:col-span-2 space-y-1.5">
+                  <label className="text-xs font-bold text-slate-300">Story Paragraph 2</label>
+                  <textarea
+                    rows={3}
+                    value={content.about.storyP2}
+                    onChange={(e) =>
+                      setContent({
+                        ...content,
+                        about: { ...content.about, storyP2: e.target.value },
+                      })
+                    }
+                    className="w-full bg-[#141E30] border border-slate-700 rounded-xl p-2.5 text-xs text-white"
+                  />
+                </div>
               </div>
 
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-300">Main Heading</label>
-                <input
-                  type="text"
-                  value={content.about.heading}
-                  onChange={(e) =>
-                    setContent({
-                      ...content,
-                      about: { ...content.about, heading: e.target.value },
-                    })
-                  }
-                  className="w-full bg-[#141E30] border border-slate-700 p-2.5 text-xs text-white"
-                />
-              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-slate-800 mt-4">
+                <div className="bg-[#141E30] border border-slate-700 rounded-xl p-3.5 space-y-2">
+                  <label className="text-[11px] font-bold text-slate-300">Stat 1 Value</label>
+                  <input
+                    type="text"
+                    value={content.about.stat1Value}
+                    onChange={(e) =>
+                      setContent({
+                        ...content,
+                        about: { ...content.about, stat1Value: e.target.value },
+                      })
+                    }
+                    className="w-full bg-[#0B1320] border border-slate-700 rounded-lg p-2 text-xs text-white"
+                  />
+                  <label className="text-[11px] font-bold text-slate-300">Stat 1 Label</label>
+                  <input
+                    type="text"
+                    value={content.about.stat1Label}
+                    onChange={(e) =>
+                      setContent({
+                        ...content,
+                        about: { ...content.about, stat1Label: e.target.value },
+                      })
+                    }
+                    className="w-full bg-[#0B1320] border border-slate-700 rounded-lg p-2 text-xs text-white"
+                  />
+                </div>
 
-              <div className="sm:col-span-2 space-y-1.5">
-                <label className="text-xs font-bold text-slate-300">Story Paragraph 1</label>
-                <textarea
-                  rows={3}
-                  value={content.about.storyP1}
-                  onChange={(e) =>
-                    setContent({
-                      ...content,
-                      about: { ...content.about, storyP1: e.target.value },
-                    })
-                  }
-                  className="w-full bg-[#141E30] border border-slate-700 p-2.5 text-xs text-white"
-                />
-              </div>
+                <div className="bg-[#141E30] border border-slate-700 rounded-xl p-3.5 space-y-2">
+                  <label className="text-[11px] font-bold text-slate-300">Stat 2 Value</label>
+                  <input
+                    type="text"
+                    value={content.about.stat2Value}
+                    onChange={(e) =>
+                      setContent({
+                        ...content,
+                        about: { ...content.about, stat2Value: e.target.value },
+                      })
+                    }
+                    className="w-full bg-[#0B1320] border border-slate-700 rounded-lg p-2 text-xs text-white"
+                  />
+                  <label className="text-[11px] font-bold text-slate-300">Stat 2 Label</label>
+                  <input
+                    type="text"
+                    value={content.about.stat2Label}
+                    onChange={(e) =>
+                      setContent({
+                        ...content,
+                        about: { ...content.about, stat2Label: e.target.value },
+                      })
+                    }
+                    className="w-full bg-[#0B1320] border border-slate-700 rounded-lg p-2 text-xs text-white"
+                  />
+                </div>
 
-              <div className="sm:col-span-2 space-y-1.5">
-                <label className="text-xs font-bold text-slate-300">Story Paragraph 2</label>
-                <textarea
-                  rows={3}
-                  value={content.about.storyP2}
-                  onChange={(e) =>
-                    setContent({
-                      ...content,
-                      about: { ...content.about, storyP2: e.target.value },
-                    })
-                  }
-                  className="w-full bg-[#141E30] border border-slate-700 p-2.5 text-xs text-white"
-                />
+                <div className="bg-[#141E30] border border-slate-700 rounded-xl p-3.5 space-y-2">
+                  <label className="text-[11px] font-bold text-slate-300">Stat 3 Value</label>
+                  <input
+                    type="text"
+                    value={content.about.stat3Value}
+                    onChange={(e) =>
+                      setContent({
+                        ...content,
+                        about: { ...content.about, stat3Value: e.target.value },
+                      })
+                    }
+                    className="w-full bg-[#0B1320] border border-slate-700 rounded-lg p-2 text-xs text-white"
+                  />
+                  <label className="text-[11px] font-bold text-slate-300">Stat 3 Label</label>
+                  <input
+                    type="text"
+                    value={content.about.stat3Label}
+                    onChange={(e) =>
+                      setContent({
+                        ...content,
+                        about: { ...content.about, stat3Label: e.target.value },
+                      })
+                    }
+                    className="w-full bg-[#0B1320] border border-slate-700 rounded-lg p-2 text-xs text-white"
+                  />
+                </div>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-slate-800">
-              <div className="bg-[#141E30] border border-slate-700 p-3.5 space-y-2">
-                <label className="text-[11px] font-bold text-slate-300">Stat 1 Value</label>
-                <input
-                  type="text"
-                  value={content.about.stat1Value}
-                  onChange={(e) =>
-                    setContent({
-                      ...content,
-                      about: { ...content.about, stat1Value: e.target.value },
-                    })
-                  }
-                  className="w-full bg-[#0B1320] border border-slate-700 p-2 text-xs text-white"
-                />
-                <label className="text-[11px] font-bold text-slate-300">Stat 1 Label</label>
-                <input
-                  type="text"
-                  value={content.about.stat1Label}
-                  onChange={(e) =>
-                    setContent({
-                      ...content,
-                      about: { ...content.about, stat1Label: e.target.value },
-                    })
-                  }
-                  className="w-full bg-[#0B1320] border border-slate-700 p-2 text-xs text-white"
-                />
+            {/* Dealers / Leadership Team Management */}
+            <div className="pt-6 border-t border-slate-800 space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h4 className="text-base font-bold text-white">
+                    Authorized Dealers &amp; Leadership Team ({(content.about?.dealers || []).length})
+                  </h4>
+                  <p className="text-xs text-slate-400 mt-0.5">
+                    Add, edit, or delete dealer cards that appear on the About page.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={addDealer}
+                  className="flex items-center gap-1.5 bg-white hover:bg-slate-100 text-[#0B1320] font-extrabold text-xs px-3.5 py-2 rounded-xl transition cursor-pointer shadow"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Add New Dealer</span>
+                </button>
               </div>
 
-              <div className="bg-[#141E30] border border-slate-700 p-3.5 space-y-2">
-                <label className="text-[11px] font-bold text-slate-300">Stat 2 Value</label>
-                <input
-                  type="text"
-                  value={content.about.stat2Value}
-                  onChange={(e) =>
-                    setContent({
-                      ...content,
-                      about: { ...content.about, stat2Value: e.target.value },
-                    })
-                  }
-                  className="w-full bg-[#0B1320] border border-slate-700 p-2 text-xs text-white"
-                />
-                <label className="text-[11px] font-bold text-slate-300">Stat 2 Label</label>
-                <input
-                  type="text"
-                  value={content.about.stat2Label}
-                  onChange={(e) =>
-                    setContent({
-                      ...content,
-                      about: { ...content.about, stat2Label: e.target.value },
-                    })
-                  }
-                  className="w-full bg-[#0B1320] border border-slate-700 p-2 text-xs text-white"
-                />
-              </div>
+              <div className="space-y-4">
+                {(content.about?.dealers || []).map((dealer, idx) => (
+                  <div
+                    key={dealer.id || idx}
+                    className="bg-[#141E30] border border-slate-700 rounded-xl p-4 space-y-3"
+                  >
+                    <div className="flex items-center justify-between border-b border-slate-700/60 pb-2">
+                      <span className="text-xs font-extrabold text-white">
+                        Dealer #{idx + 1}: {dealer.name || 'Untitled Advisor'}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => removeDealer(idx)}
+                        className="text-rose-400 hover:text-rose-300 text-xs font-bold flex items-center gap-1 cursor-pointer transition px-2 py-1 bg-rose-500/10 rounded-lg"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                        <span>Delete Dealer</span>
+                      </button>
+                    </div>
 
-              <div className="bg-[#141E30] border border-slate-700 p-3.5 space-y-2">
-                <label className="text-[11px] font-bold text-slate-300">Stat 3 Value</label>
-                <input
-                  type="text"
-                  value={content.about.stat3Value}
-                  onChange={(e) =>
-                    setContent({
-                      ...content,
-                      about: { ...content.about, stat3Value: e.target.value },
-                    })
-                  }
-                  className="w-full bg-[#0B1320] border border-slate-700 p-2 text-xs text-white"
-                />
-                <label className="text-[11px] font-bold text-slate-300">Stat 3 Label</label>
-                <input
-                  type="text"
-                  value={content.about.stat3Label}
-                  onChange={(e) =>
-                    setContent({
-                      ...content,
-                      about: { ...content.about, stat3Label: e.target.value },
-                    })
-                  }
-                  className="w-full bg-[#0B1320] border border-slate-700 p-2 text-xs text-white"
-                />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                      <div className="space-y-1">
+                        <label className="text-[11px] font-bold text-slate-300">Full Name</label>
+                        <input
+                          type="text"
+                          placeholder="e.g. Kamran Ishaq"
+                          value={dealer.name}
+                          onChange={(e) => updateDealer(idx, 'name', e.target.value)}
+                          className="w-full bg-[#0B1320] border border-slate-700 rounded-lg p-2.5 text-xs text-white font-bold"
+                        />
+                      </div>
+
+                      <div className="space-y-1">
+                        <label className="text-[11px] font-bold text-slate-300">Designation / Role</label>
+                        <input
+                          type="text"
+                          placeholder="e.g. Managing Principal"
+                          value={dealer.role}
+                          onChange={(e) => updateDealer(idx, 'role', e.target.value)}
+                          className="w-full bg-[#0B1320] border border-slate-700 rounded-lg p-2.5 text-xs text-white"
+                        />
+                      </div>
+
+                      <div className="space-y-1">
+                        <label className="text-[11px] font-bold text-slate-300">Profile Image URL</label>
+                        <input
+                          type="text"
+                          placeholder="https://..."
+                          value={dealer.image}
+                          onChange={(e) => updateDealer(idx, 'image', e.target.value)}
+                          className="w-full bg-[#0B1320] border border-slate-700 rounded-lg p-2.5 text-xs text-white"
+                        />
+                      </div>
+
+                      <div className="space-y-1">
+                        <label className="text-[11px] font-bold text-slate-300">Direct Phone (Optional)</label>
+                        <input
+                          type="text"
+                          placeholder="+92 315 5735785"
+                          value={dealer.phone || ''}
+                          onChange={(e) => updateDealer(idx, 'phone', e.target.value)}
+                          className="w-full bg-[#0B1320] border border-slate-700 rounded-lg p-2.5 text-xs text-white"
+                        />
+                      </div>
+
+                      <div className="space-y-1">
+                        <label className="text-[11px] font-bold text-slate-300">Email (Optional)</label>
+                        <input
+                          type="text"
+                          placeholder="farhanullah3333@gmail.com"
+                          value={dealer.email || ''}
+                          onChange={(e) => updateDealer(idx, 'email', e.target.value)}
+                          className="w-full bg-[#0B1320] border border-slate-700 rounded-lg p-2.5 text-xs text-white"
+                        />
+                      </div>
+
+                      <div className="sm:col-span-2 lg:col-span-3 space-y-1">
+                        <label className="text-[11px] font-bold text-slate-300">Professional Bio</label>
+                        <textarea
+                          rows={2}
+                          placeholder="Describe expertise, society authorizations, and advisory background..."
+                          value={dealer.bio}
+                          onChange={(e) => updateDealer(idx, 'bio', e.target.value)}
+                          className="w-full bg-[#0B1320] border border-slate-700 rounded-lg p-2.5 text-xs text-white leading-relaxed"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
