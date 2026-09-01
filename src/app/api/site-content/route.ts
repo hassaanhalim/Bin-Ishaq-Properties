@@ -16,18 +16,46 @@ export async function GET() {
 
     if (!error && data) {
       const defaultContent = getSiteContent();
+      const rawCompany = data.company || data.content?.company || defaultContent.company;
+
+      // Self-healing sanitizer for legacy placeholder phone/email
+      const company = {
+        ...defaultContent.company,
+        ...rawCompany,
+        phone:
+          !rawCompany.phone || rawCompany.phone.includes('5195000')
+            ? '+92 315 5735785'
+            : rawCompany.phone,
+        whatsapp:
+          !rawCompany.whatsapp || rawCompany.whatsapp.includes('5195000')
+            ? '923155735785'
+            : rawCompany.whatsapp,
+        email:
+          !rawCompany.email || rawCompany.email.includes('info@binishaq')
+            ? 'farhanullah3333@gmail.com'
+            : rawCompany.email,
+      };
+
       const content: SiteContent = {
         ...defaultContent,
-        ...(data.content || {}),
-        company: data.company || data.content?.company || defaultContent.company,
+        company,
         hero: data.hero || data.content?.hero || defaultContent.hero,
-        searchFilter: data.search_filter || data.searchFilter || data.content?.searchFilter || defaultContent.searchFilter,
+        searchFilter:
+          data.search_filter ||
+          data.searchFilter ||
+          data.content?.searchFilter ||
+          defaultContent.searchFilter,
         footer: data.footer || data.content?.footer || defaultContent.footer,
         offices: data.offices || data.content?.offices || defaultContent.offices,
-        whyChoose: data.why_choose || data.whyChoose || data.content?.whyChoose || defaultContent.whyChoose,
+        whyChoose:
+          data.why_choose ||
+          data.whyChoose ||
+          data.content?.whyChoose ||
+          defaultContent.whyChoose,
         about: data.about || data.content?.about || defaultContent.about,
         updatedAt: data.updated_at || defaultContent.updatedAt,
       };
+
       return NextResponse.json(
         { success: true, data: content },
         { headers: { 'Cache-Control': 'no-store, max-age=0, must-revalidate' } }
@@ -55,7 +83,6 @@ export async function PUT(req: NextRequest) {
     try {
       const { error } = await supabaseAdmin.from('site_content').upsert({
         id: 'current',
-        content: updated,
         company: updated.company,
         hero: updated.hero,
         search_filter: updated.searchFilter,
