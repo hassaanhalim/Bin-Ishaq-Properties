@@ -139,186 +139,143 @@ export default function AdminMapsPage() {
   };
 
   const filtered = maps.filter((m) => {
-    const q = search.toLowerCase();
     return (
-      m.title.toLowerCase().includes(q) ||
-      m.society.toLowerCase().includes(q) ||
-      (m.sector && m.sector.toLowerCase().includes(q))
+      m.title.toLowerCase().includes(search.toLowerCase()) ||
+      m.society.toLowerCase().includes(search.toLowerCase()) ||
+      (m.sector ? m.sector.toLowerCase().includes(search.toLowerCase()) : false)
     );
   });
 
   return (
-    <div className="space-y-6 font-sans">
-      {/* Header (Navy Blue / White / Slate) */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-slate-800">
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-5 border-b border-slate-800">
         <div>
-          <span className="text-xs uppercase font-bold tracking-widest text-blue-400 flex items-center gap-1.5">
-            <Compass className="w-3.5 h-3.5 text-blue-400" />
-            <span>Master Plan &amp; Demarcation Desk</span>
+          <span className="text-[11px] uppercase font-extrabold tracking-widest text-slate-400">
+            Society Master Plans &amp; Layouts
           </span>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mt-1">
-            Society Maps &amp; PDF Plans ({maps.length})
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mt-1">
+            Official Society Maps Management ({maps.length})
           </h1>
         </div>
 
-        <div className="flex items-center gap-3">
-          <Link
-            href="/maps"
-            target="_blank"
-            className="flex items-center gap-1.5 text-xs text-slate-300 hover:text-white bg-[#141E30] px-3.5 py-2.5 rounded-xl border border-slate-700 hover:border-slate-500 transition font-semibold"
-          >
-            <span>View Public Page</span>
-            <ExternalLink className="w-3.5 h-3.5 text-blue-400" />
-          </Link>
-
-          <button
-            type="button"
-            onClick={() => setShowUploadModal(true)}
-            className="flex items-center gap-2 bg-white hover:bg-slate-200 text-[#0B1320] font-extrabold text-xs px-5 py-2.5 rounded-xl transition shadow-lg cursor-pointer"
-          >
-            <PlusCircle className="w-4 h-4 text-[#0B1320]" />
-            <span>Upload New Society Map</span>
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={() => setShowUploadModal(true)}
+          className="w-full sm:w-auto min-h-[44px] flex items-center justify-center gap-2 bg-white hover:bg-slate-200 text-[#0B1320] font-black text-xs px-5 py-2.5 rounded-xl transition shadow cursor-pointer"
+        >
+          <PlusCircle className="w-4 h-4" />
+          <span>Upload Master Plan</span>
+        </button>
       </div>
 
-      {/* Search & Stats Bar */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        <div className="sm:col-span-2 relative">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
-          <input
-            type="text"
-            placeholder="Search uploaded master plans by society, block or title..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-[#0B1320] border border-slate-800 text-white placeholder-slate-500 text-xs rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition"
-          />
-        </div>
-
-        <div className="bg-[#0B1320] border border-slate-800 rounded-xl p-3 flex items-center justify-between text-xs">
-          <span className="text-slate-400 font-bold">Total Layout Downloads</span>
-          <span className="text-white font-mono font-bold text-sm">
-            {maps.reduce((acc, m) => acc + (m.downloadsCount || 0), 0).toLocaleString()}
-          </span>
-        </div>
+      {/* Search Bar */}
+      <div className="relative">
+        <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
+        <input
+          type="text"
+          placeholder="Filter maps by society, sector, title..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-full min-h-[44px] bg-[#0B1320] border border-slate-700 rounded-xl pl-10 pr-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-white transition"
+        />
       </div>
 
-      {/* Maps Grid / List */}
-      {loading ? (
-        <div className="text-center py-20 text-slate-500 text-xs uppercase tracking-widest font-bold">
-          Loading Maps Inventory...
-        </div>
-      ) : filtered.length === 0 ? (
-        <div className="text-center py-16 bg-[#0B1320] border border-slate-800 rounded-2xl p-8 space-y-3">
-          <Map className="w-10 h-10 text-slate-600 mx-auto" />
-          <h3 className="text-white font-bold text-base">No Maps Found</h3>
-          <p className="text-xs text-slate-400">Upload high-resolution master plans to display them on the website.</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filtered.map((mapItem) => (
+      {/* Maps Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        {filtered.length === 0 ? (
+          <div className="col-span-full text-center py-16 bg-[#0B1320] border border-slate-800 rounded-3xl p-6 text-slate-400 text-xs">
+            No society maps found matching search query.
+          </div>
+        ) : (
+          filtered.map((mapItem) => (
             <div
               key={mapItem.id}
-              className="bg-[#0B1320] border border-slate-800 rounded-2xl overflow-hidden shadow-lg flex flex-col justify-between group hover:border-slate-700 transition"
+              className="bg-[#0B1320] border border-slate-800 rounded-2xl overflow-hidden flex flex-col justify-between shadow-xl"
             >
-              {/* Thumbnail with robust fallback & unoptimized */}
-              <div className="relative aspect-[16/10] bg-[#070D18] overflow-hidden">
-                <Image
-                  src={mapItem.thumbnailUrl || '/maps/faisal-hills-cover.svg'}
-                  alt={mapItem.title}
-                  fill
-                  unoptimized
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0B1320] via-transparent to-transparent opacity-80" />
-
-                {/* Blue / White Society Badge */}
-                <div className="absolute top-3 left-3 bg-[#0B1320]/95 text-blue-300 text-[10px] font-bold uppercase px-2.5 py-1 rounded border border-blue-500/30 shadow-sm">
-                  {mapItem.society}
-                </div>
-
-                {/* PDF Badge */}
-                <div className="absolute top-3 right-3 bg-blue-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded shadow">
-                  PDF {mapItem.fileSize && `• ${mapItem.fileSize}`}
-                </div>
-              </div>
-
-              {/* Info */}
-              <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
-                <div className="space-y-1">
-                  <span className="text-[10px] uppercase font-bold text-blue-400 block tracking-wider truncate">
-                    {mapItem.sector || 'Master Layout'}
+              <div>
+                <div className="relative aspect-[16/10] bg-slate-900 overflow-hidden">
+                  <Image
+                    src={mapItem.thumbnailUrl || '/maps/faisal-hills-cover.svg'}
+                    alt={mapItem.title}
+                    fill
+                    className="object-cover"
+                  />
+                  <span className="absolute top-2.5 left-2.5 bg-[#0B1320]/90 text-white text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-md border border-white/20">
+                    {mapItem.society}
                   </span>
-                  <h3 className="font-bold text-white text-sm line-clamp-2 leading-snug">
+                </div>
+
+                <div className="p-4 space-y-2">
+                  <h3 className="font-bold text-sm sm:text-base text-white line-clamp-1">
                     {mapItem.title}
                   </h3>
+                  <div className="flex items-center justify-between text-xs text-slate-400">
+                    <span>{mapItem.sector}</span>
+                    <span className="font-mono text-[11px]">{mapItem.fileSize || '2.4 MB'}</span>
+                  </div>
                 </div>
+              </div>
 
-                {/* Actions */}
-                <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between gap-2">
-                  <a
-                    href={mapItem.pdfUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex-1 bg-[#141E30] hover:bg-[#1E2B45] text-slate-200 hover:text-white font-bold text-xs py-2 px-3 rounded-lg flex items-center justify-center gap-1.5 transition border border-slate-700 hover:border-slate-500"
-                  >
-                    <Eye className="w-3.5 h-3.5 text-blue-400" />
-                    <span>Preview</span>
-                  </a>
+              {/* Action Buttons Bar */}
+              <div className="p-4 pt-0 flex items-center gap-2">
+                <a
+                  href={mapItem.pdfUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex-1 min-h-[44px] bg-[#141E30] hover:bg-slate-700 text-white rounded-xl flex items-center justify-center gap-1.5 text-xs font-bold border border-slate-700 transition"
+                >
+                  <Eye className="w-3.5 h-3.5" />
+                  <span>Preview</span>
+                </a>
 
-                  <button
-                    type="button"
-                    onClick={() => handleDeleteMap(mapItem.id)}
-                    className="p-2 bg-rose-600/10 hover:bg-rose-600/20 text-rose-400 border border-rose-500/30 rounded-lg transition cursor-pointer"
-                    title="Delete Map"
-                  >
-                    <Trash2 className="w-3.5 h-3.5" />
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  onClick={() => handleDeleteMap(mapItem.id)}
+                  className="min-w-[44px] min-h-[44px] bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 rounded-xl flex items-center justify-center transition cursor-pointer"
+                  aria-label="Delete map"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
               </div>
             </div>
-          ))}
-        </div>
-      )}
+          ))
+        )}
+      </div>
 
-      {/* Upload New Map Modal */}
+      {/* Upload Master Plan Slide-up Bottom Sheet / Modal */}
       {showUploadModal && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#0B1320] border border-slate-700 w-full max-w-xl rounded-3xl p-6 sm:p-8 shadow-2xl space-y-5 animate-fade-in">
-            <div className="flex items-center justify-between pb-4 border-b border-slate-800">
-              <div className="flex items-center gap-2">
-                <div className="p-2 bg-blue-500/10 text-blue-400 border border-blue-500/30 rounded-lg">
-                  <Map className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-white text-base">Upload Society Master Plan (PDF)</h3>
-                  <span className="text-xs text-slate-400">Add an approved high-definition layout map to the portal.</span>
-                </div>
-              </div>
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/75 backdrop-blur-xs animate-in fade-in duration-200">
+          <div className="bg-[#0B1320] border border-slate-700 rounded-t-3xl sm:rounded-2xl w-full max-w-lg max-h-[90vh] flex flex-col justify-between overflow-hidden shadow-2xl">
+            <div className="p-4 sm:p-5 border-b border-slate-800 flex items-center justify-between shrink-0">
+              <h3 className="text-base sm:text-lg font-bold text-white">
+                Upload Society Master Plan
+              </h3>
               <button
+                type="button"
                 onClick={() => setShowUploadModal(false)}
-                className="text-slate-400 hover:text-white p-1 cursor-pointer"
+                className="min-w-[40px] min-h-[40px] rounded-xl bg-[#141E30] text-slate-400 hover:text-white flex items-center justify-center border border-slate-700 cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <form onSubmit={handleCreateMap} className="space-y-4">
+            <form onSubmit={handleCreateMap} className="p-4 sm:p-6 overflow-y-auto space-y-4">
               <div>
                 <label className="text-xs font-bold text-slate-300 block mb-1">
-                  Master Plan Title *
+                  Map Title *
                 </label>
                 <input
                   type="text"
                   required
+                  placeholder="e.g. Faisal Hills Executive Block Master Plan"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  placeholder="e.g. Faisal Hills Islamabad (2024) Approved Master Plan Layout"
-                  className="w-full bg-[#141E30] border border-slate-700 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-blue-500 font-semibold"
+                  className="w-full min-h-[44px] bg-[#141E30] border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-white"
                 />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="text-xs font-bold text-slate-300 block mb-1">
                     Housing Society *
@@ -326,11 +283,11 @@ export default function AdminMapsPage() {
                   <select
                     value={society}
                     onChange={(e) => setSociety(e.target.value)}
-                    className="w-full bg-[#141E30] border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500 font-semibold"
+                    className="w-full min-h-[44px] bg-[#141E30] border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-white cursor-pointer [&>option]:bg-[#0B1320] [&>option]:text-white"
                   >
-                    {PRIME_SOCIETIES_LIST.map((s) => (
-                      <option key={s} value={s}>
-                        {s}
+                    {PRIME_SOCIETIES_LIST.map((soc) => (
+                      <option key={soc} value={soc}>
+                        {soc}
                       </option>
                     ))}
                   </select>
@@ -338,68 +295,38 @@ export default function AdminMapsPage() {
 
                 <div>
                   <label className="text-xs font-bold text-slate-300 block mb-1">
-                    Sector / Block Scope
+                    Block / Sector
                   </label>
                   <input
                     type="text"
+                    placeholder="e.g. Block A, B, Executive"
                     value={sector}
                     onChange={(e) => setSector(e.target.value)}
-                    placeholder="e.g. Executive Block & Blocks A-D"
-                    className="w-full bg-[#141E30] border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500"
+                    className="w-full min-h-[44px] bg-[#141E30] border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-white"
                   />
                 </div>
               </div>
 
-              {/* PDF File Picker */}
               <div>
                 <label className="text-xs font-bold text-slate-300 block mb-1">
-                  PDF Master Plan File *
-                </label>
-                <div className="border border-dashed border-slate-700 hover:border-blue-500 bg-[#141E30] rounded-xl p-4 text-center relative cursor-pointer transition">
-                  <input
-                    type="file"
-                    accept="application/pdf,image/*"
-                    onChange={(e) => handleFileUpload(e, 'pdf')}
-                    className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
-                  />
-                  <div className="flex flex-col items-center gap-1.5 pointer-events-none">
-                    <Upload className="w-5 h-5 text-blue-400" />
-                    <span className="text-xs font-bold text-white">
-                      {pdfUrl ? '✓ PDF File Selected' : 'Click to select high-definition PDF / Image map'}
-                    </span>
-                    <span className="text-[10px] text-slate-400">PDF, JPG, PNG up to 25MB</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Thumbnail Picker */}
-              <div>
-                <label className="text-xs font-bold text-slate-300 block mb-1">
-                  Map Thumbnail Preview Image (Optional)
+                  Upload Map Image or PDF File
                 </label>
                 <input
-                  type="text"
-                  value={thumbnailUrl}
-                  onChange={(e) => setThumbnailUrl(e.target.value)}
-                  placeholder="Paste preview image URL or leave blank to use blueprint graphic"
-                  className="w-full bg-[#141E30] border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500"
+                  type="file"
+                  accept="image/*,application/pdf"
+                  onChange={(e) => handleFileUpload(e, 'pdf')}
+                  className="w-full text-xs text-slate-300 file:mr-3 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-white file:text-[#0B1320] file:cursor-pointer"
                 />
               </div>
 
-              <div className="pt-4 border-t border-slate-800 flex justify-end gap-3">
-                <button
-                  type="button"
-                  onClick={() => setShowUploadModal(false)}
-                  className="px-4 py-2.5 bg-[#141E30] text-slate-300 rounded-xl text-xs font-semibold hover:text-white cursor-pointer"
-                >
-                  Cancel
-                </button>
+              <div className="pt-2">
                 <button
                   type="submit"
-                  disabled={saving}
-                  className="px-6 py-2.5 bg-white hover:bg-slate-200 text-[#0B1320] rounded-xl text-xs font-extrabold shadow-lg disabled:opacity-50 transition cursor-pointer"
+                  disabled={saving || !title}
+                  className="w-full min-h-[48px] bg-white hover:bg-slate-200 text-[#0B1320] font-black text-xs uppercase tracking-wider py-3 rounded-xl transition shadow flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                 >
-                  {saving ? 'Publishing Map...' : 'Publish Master Plan'}
+                  <Upload className="w-4 h-4" />
+                  <span>{saving ? 'Publishing Plan...' : 'Save & Publish Master Plan'}</span>
                 </button>
               </div>
             </form>

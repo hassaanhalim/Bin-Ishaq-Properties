@@ -257,36 +257,36 @@ export default function SiteContentEditorPage() {
   }
 
   return (
-    <div className="space-y-8 pb-16">
+    <div className="space-y-6 sm:space-y-8 pb-20">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-slate-800">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-5 border-b border-slate-800">
         <div>
-          <span className="text-xs uppercase font-bold tracking-widest text-slate-400">
+          <span className="text-[11px] uppercase font-extrabold tracking-widest text-slate-400">
             Frontend Content Management
           </span>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mt-1">
-            Site Content & Text Editor (CMS)
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mt-1">
+            Site Content &amp; Text Editor (CMS)
           </h1>
           <p className="text-xs text-slate-400 mt-1">
             Edit search filter options, footer links, brand details, and marketing copy in real-time.
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5 w-full sm:w-auto">
           <a
             href="/"
             target="_blank"
             rel="noreferrer"
-            className="flex items-center gap-1.5 bg-[#141E30] hover:bg-[#1E2B45] text-slate-300 text-xs font-semibold px-4 py-2.5 border border-slate-700 transition"
+            className="flex-1 sm:flex-none min-h-[44px] flex items-center justify-center gap-1.5 bg-[#141E30] hover:bg-[#1E2B45] text-slate-300 text-xs font-semibold px-4 py-2.5 rounded-xl border border-slate-700 transition"
           >
-            <span>Preview Website</span>
+            <span>Preview Site</span>
             <ExternalLink className="w-3.5 h-3.5" />
           </a>
 
           <button
             onClick={handleSave}
             disabled={saving}
-            className="flex items-center gap-2 bg-white hover:bg-slate-200 text-[#0B1320] font-bold text-xs px-5 py-2.5 transition cursor-pointer"
+            className="flex-1 sm:flex-none min-h-[44px] flex items-center justify-center gap-2 bg-white hover:bg-slate-200 text-[#0B1320] font-black text-xs px-5 py-2.5 rounded-xl transition cursor-pointer shadow"
           >
             {saving ? (
               <RefreshCw className="w-4 h-4 animate-spin" />
@@ -299,7 +299,7 @@ export default function SiteContentEditorPage() {
       </div>
 
       {savedSuccess && (
-        <div className="bg-emerald-950/80 border border-emerald-500 text-emerald-300 p-4 flex items-center gap-3">
+        <div className="bg-emerald-950/80 border border-emerald-500 text-emerald-300 p-4 rounded-2xl flex items-center gap-3 animate-in fade-in">
           <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
           <div>
             <h4 className="text-xs font-bold">Content Updated Successfully!</h4>
@@ -310,15 +310,15 @@ export default function SiteContentEditorPage() {
         </div>
       )}
 
-      {/* Editor Navigation Tabs */}
-      <div className="flex items-center gap-2 border-b border-slate-800 pb-2 overflow-x-auto">
+      {/* Editor Navigation Tabs (Mobile horizontal scrollable pills) */}
+      <div className="flex items-center gap-2 border-b border-slate-800 pb-3 overflow-x-auto scrollbar-none">
         <button
           type="button"
           onClick={() => setActiveTab('hero')}
-          className={`flex items-center gap-2 px-4 py-2 text-xs font-semibold transition shrink-0 ${
+          className={`min-h-[44px] flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-xl transition shrink-0 cursor-pointer ${
             activeTab === 'hero'
-              ? 'bg-white text-[#0B1320] font-bold'
-              : 'text-slate-400 hover:text-white hover:bg-[#141E30]'
+              ? 'bg-white text-[#0B1320] shadow-md'
+              : 'bg-[#0B1320] text-slate-400 hover:text-white border border-slate-800 hover:bg-[#141E30]'
           }`}
         >
           <Home className="w-3.5 h-3.5" />
@@ -328,10 +328,10 @@ export default function SiteContentEditorPage() {
         <button
           type="button"
           onClick={() => setActiveTab('search')}
-          className={`flex items-center gap-2 px-4 py-2 text-xs font-semibold transition shrink-0 ${
+          className={`min-h-[44px] flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-xl transition shrink-0 cursor-pointer ${
             activeTab === 'search'
-              ? 'bg-white text-[#0B1320] font-bold'
-              : 'text-slate-400 hover:text-white hover:bg-[#141E30]'
+              ? 'bg-white text-[#0B1320] shadow-md'
+              : 'bg-[#0B1320] text-slate-400 hover:text-white border border-slate-800 hover:bg-[#141E30]'
           }`}
         >
           <Search className="w-3.5 h-3.5" />
@@ -341,49 +341,49 @@ export default function SiteContentEditorPage() {
         <button
           type="button"
           onClick={() => setActiveTab('footer')}
-          className={`flex items-center gap-2 px-4 py-2 text-xs font-semibold transition shrink-0 ${
+          className={`min-h-[44px] flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-xl transition shrink-0 cursor-pointer ${
             activeTab === 'footer'
-              ? 'bg-white text-[#0B1320] font-bold'
-              : 'text-slate-400 hover:text-white hover:bg-[#141E30]'
+              ? 'bg-white text-[#0B1320] shadow-md'
+              : 'bg-[#0B1320] text-slate-400 hover:text-white border border-slate-800 hover:bg-[#141E30]'
           }`}
         >
           <LayoutTemplate className="w-3.5 h-3.5" />
-          <span>Footer & Links</span>
+          <span>Footer &amp; Links</span>
         </button>
 
         <button
           type="button"
           onClick={() => setActiveTab('contact')}
-          className={`flex items-center gap-2 px-4 py-2 text-xs font-semibold transition shrink-0 ${
+          className={`min-h-[44px] flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-xl transition shrink-0 cursor-pointer ${
             activeTab === 'contact'
-              ? 'bg-white text-[#0B1320] font-bold'
-              : 'text-slate-400 hover:text-white hover:bg-[#141E30]'
+              ? 'bg-white text-[#0B1320] shadow-md'
+              : 'bg-[#0B1320] text-slate-400 hover:text-white border border-slate-800 hover:bg-[#141E30]'
           }`}
         >
           <Phone className="w-3.5 h-3.5" />
-          <span>Hotlines & Contact</span>
+          <span>Hotlines &amp; Contact</span>
         </button>
 
         <button
           type="button"
           onClick={() => setActiveTab('offices')}
-          className={`flex items-center gap-2 px-4 py-2 text-xs font-semibold transition shrink-0 ${
+          className={`min-h-[44px] flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-xl transition shrink-0 cursor-pointer ${
             activeTab === 'offices'
-              ? 'bg-white text-[#0B1320] font-bold'
-              : 'text-slate-400 hover:text-white hover:bg-[#141E30]'
+              ? 'bg-white text-[#0B1320] shadow-md'
+              : 'bg-[#0B1320] text-slate-400 hover:text-white border border-slate-800 hover:bg-[#141E30]'
           }`}
         >
           <Building className="w-3.5 h-3.5" />
-          <span>Offices & Locations</span>
+          <span>Offices &amp; Locations</span>
         </button>
 
         <button
           type="button"
           onClick={() => setActiveTab('why')}
-          className={`flex items-center gap-2 px-4 py-2 text-xs font-semibold transition shrink-0 ${
+          className={`min-h-[44px] flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-xl transition shrink-0 cursor-pointer ${
             activeTab === 'why'
-              ? 'bg-white text-[#0B1320] font-bold'
-              : 'text-slate-400 hover:text-white hover:bg-[#141E30]'
+              ? 'bg-white text-[#0B1320] shadow-md'
+              : 'bg-[#0B1320] text-slate-400 hover:text-white border border-slate-800 hover:bg-[#141E30]'
           }`}
         >
           <Award className="w-3.5 h-3.5" />
@@ -393,10 +393,10 @@ export default function SiteContentEditorPage() {
         <button
           type="button"
           onClick={() => setActiveTab('about')}
-          className={`flex items-center gap-2 px-4 py-2 text-xs font-semibold transition shrink-0 ${
+          className={`min-h-[44px] flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-xl transition shrink-0 cursor-pointer ${
             activeTab === 'about'
-              ? 'bg-white text-[#0B1320] font-bold'
-              : 'text-slate-400 hover:text-white hover:bg-[#141E30]'
+              ? 'bg-white text-[#0B1320] shadow-md'
+              : 'bg-[#0B1320] text-slate-400 hover:text-white border border-slate-800 hover:bg-[#141E30]'
           }`}
         >
           <FileText className="w-3.5 h-3.5" />
@@ -407,9 +407,9 @@ export default function SiteContentEditorPage() {
       <form onSubmit={handleSave} className="space-y-6">
         {/* ================= TAB 1: HERO ================= */}
         {activeTab === 'hero' && (
-          <div className="bg-[#0B1320] border border-slate-800 p-6 space-y-5">
+          <div className="bg-[#0B1320] border border-slate-800 rounded-2xl p-4 sm:p-6 space-y-5 shadow-xl">
             <h3 className="text-base font-bold text-white border-b border-slate-800 pb-3">
-              Hero Section Headline & Copy
+              Hero Section Headline &amp; Copy
             </h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1488,12 +1488,12 @@ export default function SiteContentEditorPage() {
           </div>
         )}
 
-        {/* Floating Save Button Bar */}
+        {/* Form Bottom Save Button */}
         <div className="flex justify-end pt-4">
           <button
             type="submit"
             disabled={saving}
-            className="flex items-center gap-2 bg-white hover:bg-slate-200 text-[#0B1320] font-bold text-sm px-8 py-3.5 transition cursor-pointer shadow-lg"
+            className="w-full sm:w-auto min-h-[48px] flex items-center justify-center gap-2 bg-white hover:bg-slate-200 text-[#0B1320] font-black text-sm px-8 py-3.5 rounded-xl transition cursor-pointer shadow-xl disabled:opacity-50"
           >
             {saving ? (
               <RefreshCw className="w-4 h-4 animate-spin" />
@@ -1504,6 +1504,32 @@ export default function SiteContentEditorPage() {
           </button>
         </div>
       </form>
+
+      {/* Floating Sticky Save Bar on Mobile */}
+      <div className="md:hidden fixed bottom-16 inset-x-3 z-30 bg-[#0B1320]/95 backdrop-blur-md p-3 rounded-2xl border border-slate-700 shadow-2xl flex items-center justify-between gap-3">
+        <div className="overflow-hidden">
+          <span className="text-[11px] font-extrabold text-white block truncate">
+            Site Content CMS
+          </span>
+          <span className="text-[10px] text-slate-400 block truncate">
+            Unsaved changes are preserved
+          </span>
+        </div>
+
+        <button
+          type="button"
+          onClick={handleSave}
+          disabled={saving}
+          className="min-h-[44px] px-5 py-2 rounded-xl bg-white hover:bg-slate-200 text-[#0B1320] font-black text-xs flex items-center justify-center gap-2 shrink-0 shadow cursor-pointer disabled:opacity-50"
+        >
+          {saving ? (
+            <RefreshCw className="w-4 h-4 animate-spin" />
+          ) : (
+            <Save className="w-4 h-4" />
+          )}
+          <span>{saving ? 'Saving...' : 'Save All'}</span>
+        </button>
+      </div>
     </div>
   );
 }
