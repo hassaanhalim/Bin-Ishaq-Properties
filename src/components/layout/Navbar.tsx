@@ -12,6 +12,15 @@ import {
   Phone,
   ArrowRight,
   User,
+  Home,
+  Building2,
+  MapPin,
+  Tag,
+  KeyRound,
+  Landmark,
+  Headphones,
+  Mail,
+  ChevronRight,
 } from 'lucide-react';
 
 export default function Navbar() {
@@ -40,14 +49,14 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { label: 'Home', href: '/' },
-    { label: 'Properties', href: '/properties' },
-    { label: 'Maps', href: '/maps' },
-    { label: 'Sell', href: '/submit-property' },
-    { label: 'Rent', href: '/properties?purpose=rent' },
-    { label: 'About', href: '/about' },
-    { label: 'Services', href: '/services' },
-    { label: 'Contact', href: '/contact' },
+    { label: 'Home', href: '/', icon: Home },
+    { label: 'Properties', href: '/properties', icon: Building2 },
+    { label: 'Maps', href: '/maps', icon: MapPin },
+    { label: 'Sell', href: '/submit-property', icon: Tag },
+    { label: 'Rent', href: '/properties?purpose=rent', icon: KeyRound },
+    { label: 'About', href: '/about', icon: Landmark },
+    { label: 'Services', href: '/services', icon: Headphones },
+    { label: 'Contact', href: '/contact', icon: Mail },
   ];
 
   return (
@@ -145,36 +154,55 @@ export default function Navbar() {
 
       {/* Mobile Slide-down Nav Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#0B1320] border-b border-slate-800 px-6 py-5 space-y-4">
-          <nav className="flex flex-col space-y-3 font-bold text-base">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-slate-100 hover:text-white py-1 border-b border-slate-800"
-              >
-                {link.label}
-              </Link>
-            ))}
+        <div className="lg:hidden bg-[#071322] border-b border-white/10 px-5 py-4 space-y-4 shadow-2xl animate-in slide-in-from-top duration-200">
+          <nav className="flex flex-col space-y-1">
+            {navLinks.map((link) => {
+              const Icon = link.icon;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center justify-between py-2.5 px-2 border-b border-white/5 text-slate-200 hover:text-white transition group"
+                >
+                  <div className="flex items-center gap-3">
+                    <Icon className="w-4 h-4 text-white/90 group-hover:text-white" />
+                    <span className="font-serif text-sm sm:text-base font-bold tracking-wide text-white">
+                      {link.label}
+                    </span>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-white group-hover:translate-x-0.5 transition-transform" />
+                </Link>
+              );
+            })}
           </nav>
 
-          <div className="pt-2 flex flex-col gap-3">
-            <a
-              href={`tel:${phone.replace(/\s+/g, '')}`}
-              className="flex items-center gap-2 text-sm font-bold text-white bg-[#141E30] p-3 border border-slate-700"
-            >
-              <Phone className="w-4 h-4 text-slate-400" />
-              <span>Direct Hotline: {phone}</span>
-            </a>
+          <div className="pt-2">
+            <div className="bg-[#0B1A2E] border border-white/10 rounded-2xl p-4 space-y-3 shadow-sm">
+              <a
+                href={`tel:${phone.replace(/\s+/g, '')}`}
+                className="flex items-center gap-3 text-white"
+              >
+                <div className="w-9 h-9 rounded-full bg-white/10 border border-white/15 flex items-center justify-center text-white shrink-0">
+                  <Phone className="w-4 h-4" />
+                </div>
+                <div>
+                  <span className="text-[10px] uppercase font-extrabold tracking-wider text-slate-400 block">
+                    Direct Hotline
+                  </span>
+                  <span className="font-bold text-sm text-white tracking-wide">{phone}</span>
+                </div>
+              </a>
 
-            <Link
-              href="/submit-property"
-              onClick={() => setMobileMenuOpen(false)}
-              className="w-full bg-white text-[#0B1320] text-center font-bold text-sm py-3 transition"
-            >
-              List Your Property
-            </Link>
+              <Link
+                href="/submit-property"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full bg-white hover:bg-slate-100 text-slate-950 font-black text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition shadow-md active:scale-[0.99]"
+              >
+                <Building2 className="w-4 h-4 stroke-[2.5]" />
+                <span>List Your Property</span>
+              </Link>
+            </div>
           </div>
         </div>
       )}
