@@ -49,21 +49,21 @@ function SignupForm() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF8F3] flex flex-col justify-center py-12 sm:px-6 lg:px-8 font-sans">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        <Link href="/" className="inline-flex justify-center mb-6">
-          <BinIshaqLogo size="lg" variant="dark" />
+    <div className="min-h-[calc(100vh-140px)] min-h-[calc(100svh-140px)] bg-[#FAF8F3] flex flex-col justify-center py-4 sm:py-10 sm:px-6 lg:px-8 font-sans">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center px-4">
+        <Link href="/" className="inline-flex justify-center mb-3 sm:mb-5">
+          <BinIshaqLogo size="md" variant="dark" />
         </Link>
         <h2 className="font-serif text-2xl sm:text-3xl font-bold tracking-[-0.02em] text-slate-900">
           Create Investor Account
         </h2>
-        <p className="mt-2 text-xs sm:text-sm text-slate-600">
+        <p className="mt-1 text-xs sm:text-sm text-slate-600 max-w-sm mx-auto">
           Join verified clients accessing exclusive society allocations, master plans, and listing perks.
         </p>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4">
-        <div className="bg-white border border-slate-200 py-8 px-6 sm:px-10 shadow-sm rounded-2xl">
+      <div className="mt-4 sm:mt-6 sm:mx-auto sm:w-full sm:max-w-md px-4">
+        <div className="bg-white border border-slate-200 py-6 sm:py-8 px-5 sm:px-10 shadow-sm rounded-2xl">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">

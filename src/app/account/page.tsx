@@ -93,28 +93,28 @@ export default function AccountPage() {
   // 2. Unauthenticated Gate (Strict Login Required)
   if (!user) {
     return (
-      <div className="min-h-screen bg-[#FAF8F3] py-16 px-4 sm:px-8 font-sans flex items-center justify-center">
-        <div className="max-w-md w-full bg-white border border-slate-200 rounded-3xl p-8 sm:p-10 shadow-lg text-center space-y-6">
-          <div className="w-16 h-16 bg-[#0B1320] text-white rounded-2xl flex items-center justify-center mx-auto shadow-md">
-            <Lock className="w-7 h-7" />
+      <div className="min-h-[calc(100vh-140px)] min-h-[calc(100svh-140px)] bg-[#FAF8F3] py-4 sm:py-10 px-4 sm:px-8 font-sans flex items-center justify-center">
+        <div className="max-w-md w-full bg-white border border-slate-200 rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-md text-center space-y-4 sm:space-y-5 my-auto">
+          <div className="w-12 h-12 sm:w-14 sm:h-14 bg-[#0B1320] text-white rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto shadow-sm">
+            <Lock className="w-5 h-5 sm:w-6 sm:h-6" />
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             <span className="text-[10px] uppercase font-bold tracking-widest text-slate-500 block">
               Client Authentication Required
             </span>
-            <h1 className="text-2xl font-bold text-slate-950">
+            <h1 className="text-xl sm:text-2xl font-bold text-slate-950">
               Sign In to Your Account
             </h1>
-            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            <p className="text-xs text-slate-600 leading-relaxed max-w-sm mx-auto">
               Please sign in to view your saved properties, track listed property submissions, and communicate with society officers.
             </p>
           </div>
 
-          <div className="space-y-3 pt-2">
+          <div className="space-y-2.5 pt-1">
             <Link
               href="/login?redirect=/account"
-              className="w-full bg-[#0B1320] hover:bg-black text-white font-bold py-3.5 px-4 rounded-xl text-sm flex items-center justify-center gap-2 transition cursor-pointer shadow"
+              className="w-full bg-[#0B1320] hover:bg-black text-white font-bold py-3 px-4 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2 transition cursor-pointer shadow"
             >
               <span>Sign In to Client Portal</span>
               <ArrowRight className="w-4 h-4" />
@@ -122,14 +122,14 @@ export default function AccountPage() {
 
             <Link
               href="/signup?redirect=/account"
-              className="w-full bg-white hover:bg-slate-50 text-slate-900 font-bold py-3.5 px-4 rounded-xl text-sm border border-slate-300 flex items-center justify-center gap-2 transition"
+              className="w-full bg-white hover:bg-slate-50 text-slate-900 font-bold py-3 px-4 rounded-xl text-xs sm:text-sm border border-slate-300 flex items-center justify-center gap-2 transition"
             >
               <span>Create New Investor Account</span>
             </Link>
           </div>
 
-          <div className="pt-4 border-t border-slate-100 flex items-center justify-center gap-2 text-xs text-slate-500">
-            <ShieldCheck className="w-4 h-4 text-emerald-600" />
+          <div className="pt-3 border-t border-slate-100 flex items-center justify-center gap-1.5 text-[11px] text-slate-500">
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
             <span>Official Society Advisory Portal</span>
           </div>
         </div>
