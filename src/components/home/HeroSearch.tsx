@@ -13,6 +13,7 @@ import {
   Check,
   Maximize2,
   ChevronRight,
+  ChevronDown,
 } from 'lucide-react';
 import { PropertyPurpose } from '@/types/property';
 
@@ -170,10 +171,10 @@ export default function HeroSearch() {
   return (
     <div
       ref={searchRef}
-      className="w-full max-w-xl mx-auto bg-[#071322]/95 backdrop-blur-xl border border-white/10 rounded-2xl p-4 sm:p-6 shadow-2xl space-y-3.5 font-sans"
+      className="w-full max-w-xl lg:max-w-5xl mx-auto bg-[#071322]/95 backdrop-blur-xl border border-white/10 rounded-2xl p-4 sm:p-6 shadow-2xl space-y-3.5 font-sans"
     >
       {/* 1. Top Tabs: Buy Property & Rent Property */}
-      <div className="flex items-center gap-2 pb-1">
+      <div className="flex items-center gap-2 pb-1 max-w-xs sm:max-w-sm">
         {/* Buy Tab */}
         <button
           type="button"
@@ -181,7 +182,7 @@ export default function HeroSearch() {
             setActiveTab('buy');
             setOpenDropdown(null);
           }}
-          className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs sm:text-sm font-extrabold transition cursor-pointer ${
+          className={`flex-1 flex items-center justify-center gap-2 py-2.5 sm:py-3 px-4 rounded-xl text-xs sm:text-sm font-extrabold transition cursor-pointer ${
             activeTab === 'buy'
               ? 'bg-white/10 border border-white/30 text-white shadow-inner'
               : 'text-slate-300 hover:text-white hover:bg-white/5 border border-transparent'
@@ -198,7 +199,7 @@ export default function HeroSearch() {
             setActiveTab('rent');
             setOpenDropdown(null);
           }}
-          className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs sm:text-sm font-extrabold transition cursor-pointer ${
+          className={`flex-1 flex items-center justify-center gap-2 py-2.5 sm:py-3 px-4 rounded-xl text-xs sm:text-sm font-extrabold transition cursor-pointer ${
             activeTab === 'rent'
               ? 'bg-white/10 border border-white/30 text-white shadow-inner'
               : 'text-slate-300 hover:text-white hover:bg-white/5 border border-transparent'
@@ -209,13 +210,13 @@ export default function HeroSearch() {
         </button>
       </div>
 
-      {/* 2. Main Search Console Stack */}
-      <form onSubmit={handleSearch} className="space-y-2.5">
+      {/* 2. Main Search Console Stack (Vertical on Mobile, Horizontal Row on Laptop/Desktop) */}
+      <form onSubmit={handleSearch} className="grid grid-cols-1 lg:grid-cols-4 gap-2.5 sm:gap-3 items-stretch">
         {/* Field 1: Location / Area */}
         <div className="relative">
           <div
             onClick={() => setOpenDropdown(openDropdown === 'area' ? null : 'area')}
-            className={`bg-[#0B1A2E]/90 border rounded-xl p-3.5 flex items-center justify-between transition cursor-pointer select-none ${
+            className={`h-full min-h-[58px] bg-[#0B1A2E]/90 border rounded-xl p-3.5 flex items-center justify-between transition cursor-pointer select-none ${
               openDropdown === 'area' ? 'border-white ring-1 ring-white/50' : 'border-white/10 hover:border-white/25'
             }`}
           >
@@ -264,7 +265,7 @@ export default function HeroSearch() {
         <div className="relative">
           <div
             onClick={() => setOpenDropdown(openDropdown === 'type' ? null : 'type')}
-            className={`bg-[#0B1A2E]/90 border rounded-xl p-3.5 flex items-center justify-between transition cursor-pointer select-none ${
+            className={`h-full min-h-[58px] bg-[#0B1A2E]/90 border rounded-xl p-3.5 flex items-center justify-between transition cursor-pointer select-none ${
               openDropdown === 'type' ? 'border-white ring-1 ring-white/50' : 'border-white/10 hover:border-white/25'
             }`}
           >
@@ -313,7 +314,7 @@ export default function HeroSearch() {
         <div className="relative">
           <div
             onClick={() => setOpenDropdown(openDropdown === 'size' ? null : 'size')}
-            className={`bg-[#0B1A2E]/90 border rounded-xl p-3.5 flex items-center justify-between transition cursor-pointer select-none ${
+            className={`h-full min-h-[58px] bg-[#0B1A2E]/90 border rounded-xl p-3.5 flex items-center justify-between transition cursor-pointer select-none ${
               openDropdown === 'size' ? 'border-white ring-1 ring-white/50' : 'border-white/10 hover:border-white/25'
             }`}
           >
@@ -341,7 +342,7 @@ export default function HeroSearch() {
 
           {/* Size / Bedroom Dropdown Menu */}
           {openDropdown === 'size' && (
-            <div className="absolute left-0 top-full mt-1.5 w-full bg-[#071322] border border-white/15 rounded-xl shadow-2xl z-50 py-1.5 max-h-64 overflow-y-auto">
+            <div className="absolute left-0 lg:left-auto lg:right-0 top-full mt-1.5 w-full sm:w-72 bg-[#071322] border border-white/15 rounded-xl shadow-2xl z-50 py-1.5 max-h-64 overflow-y-auto">
               {isPlotMode ? (
                 PLOT_SIZE_OPTIONS.map((opt) => (
                   <button
@@ -404,11 +405,11 @@ export default function HeroSearch() {
           )}
         </div>
 
-        {/* 3. Action Button: Search Properties (Full Width White Button) */}
-        <div className="pt-1.5">
+        {/* 4. Action Button: Search Properties (Full Height in Row on Laptop) */}
+        <div className="flex items-stretch">
           <button
             type="submit"
-            className="w-full bg-white hover:bg-slate-100 text-slate-950 font-extrabold text-sm sm:text-base py-3.5 sm:py-4 px-6 rounded-xl flex items-center justify-center gap-2.5 transition shadow-lg cursor-pointer active:scale-[0.99]"
+            className="w-full h-full min-h-[58px] bg-white hover:bg-slate-100 text-slate-950 font-extrabold text-sm sm:text-base py-3.5 px-6 rounded-xl flex items-center justify-center gap-2.5 transition shadow-lg cursor-pointer active:scale-[0.99]"
           >
             <Search className="w-4 h-4 stroke-[2.5]" />
             <span>Search Properties</span>
