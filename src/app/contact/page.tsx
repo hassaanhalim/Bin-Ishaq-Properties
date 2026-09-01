@@ -42,7 +42,7 @@ export default function ContactPage() {
       address: 'Commercial Avenue, Block B, MPCHS Multi Gardens B-17, Islamabad',
       phone: '+92 315 5735785',
       whatsapp: '923155735785',
-      email: 'info@binishaqproperties.com',
+      email: 'farhanullah3333@gmail.com',
     },
   ];
 
@@ -52,7 +52,7 @@ export default function ContactPage() {
     city: 'Islamabad Desk (B-17 & Faisal Town)',
     address: 'Commercial Avenue, Block B, MPCHS Multi Gardens B-17, Islamabad',
     phone: '+92 315 5735785',
-    email: 'info@binishaqproperties.com',
+    email: 'farhanullah3333@gmail.com',
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

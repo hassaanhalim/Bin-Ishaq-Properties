@@ -30,7 +30,7 @@ export default function Footer() {
 
   const phone = content?.company?.phone || '+92 315 5735785';
   const whatsapp = content?.company?.whatsapp || '923155735785';
-  const email = content?.company?.email || 'info@binishaqproperties.com';
+  const email = content?.company?.email || 'farhanullah3333@gmail.com';
   const address = content?.company?.address || 'Head Office: Faisal Town / MPCHS B-17 Commercial Hub, Islamabad';
 
   const brandDescription =

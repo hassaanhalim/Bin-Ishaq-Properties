@@ -172,7 +172,7 @@ export const DEFAULT_SITE_CONTENT: SiteContent = {
     tagline: 'Authorized Housing Societies Dealer & Property Advisory',
     phone: '+92 315 5735785',
     whatsapp: '923155735785',
-    email: 'info@binishaqproperties.com',
+    email: 'farhanullah3333@gmail.com',
     address: 'Head Office: Faisal Town / MPCHS B-17 Commercial Hub, Islamabad',
     workingHours: 'Mon - Sat: 10:00 AM - 8:00 PM',
   },
@@ -210,7 +210,7 @@ export const DEFAULT_SITE_CONTENT: SiteContent = {
       address: 'Commercial Avenue, Block B, MPCHS Multi Gardens B-17, Islamabad',
       phone: '+92 315 5735785',
       whatsapp: '923155735785',
-      email: 'info@binishaqproperties.com',
+      email: 'farhanullah3333@gmail.com',
     },
     {
       id: 'off-2',
@@ -218,7 +218,7 @@ export const DEFAULT_SITE_CONTENT: SiteContent = {
       address: 'Executive Tower 1, Khayaban-e-Shamsheer, DHA Phase 5, Karachi',
       phone: '+92 315 5735785',
       whatsapp: '923155735785',
-      email: 'info@binishaqproperties.com',
+      email: 'farhanullah3333@gmail.com',
     },
     {
       id: 'off-3',
@@ -226,7 +226,7 @@ export const DEFAULT_SITE_CONTENT: SiteContent = {
       address: 'Main Boulevard, Phase 6, DHA Lahore',
       phone: '+92 315 5735785',
       whatsapp: '923155735785',
-      email: 'info@binishaqproperties.com',
+      email: 'farhanullah3333@gmail.com',
     },
   ],
   about: {
