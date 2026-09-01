@@ -20,7 +20,7 @@ export default function Navbar() {
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [phone, setPhone] = useState('+92 300 5195000');
+  const [phone, setPhone] = useState('+92 315 5735785');
 
   useEffect(() => {
     const handleScroll = () => {

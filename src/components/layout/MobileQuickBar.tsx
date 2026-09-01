@@ -15,7 +15,7 @@ import {
 export default function MobileQuickBar() {
   const pathname = usePathname();
   const { savedPropertyIds } = useStore();
-  const [phone, setPhone] = React.useState('+92 300 5195000');
+  const [phone, setPhone] = React.useState('+92 315 5735785');
 
   React.useEffect(() => {
     fetch('/api/site-content')
@@ -30,7 +30,7 @@ export default function MobileQuickBar() {
     return null;
   }
 
-  const whatsappNumber = phone.replace(/\D/g, '') || '923005195000';
+  const whatsappNumber = phone.replace(/\D/g, '') || '923155735785';
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-40 bg-[#071426]/95 backdrop-blur-xl border-t border-white/10 px-4 py-2.5 sm:hidden shadow-[0_-10px_25px_rgba(0,0,0,0.7)]">

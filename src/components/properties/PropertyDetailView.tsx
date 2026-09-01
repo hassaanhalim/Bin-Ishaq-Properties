@@ -514,7 +514,7 @@ export default function PropertyDetailView({
                       Senior Executive Broker ({property.submittedBy?.role || 'authorized dealer'})
                     </p>
                     <p className="text-[10px] text-slate-400">
-                      {property.submittedBy?.phone || '+92 321 2588 222'}
+                      {property.submittedBy?.phone || '+92 315 5735785'}
                     </p>
                   </div>
                 </div>

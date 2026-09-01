@@ -40,18 +40,18 @@ export default function ContactPage() {
       id: '1',
       city: 'Islamabad Desk (B-17 & Faisal Town)',
       address: 'Commercial Avenue, Block B, MPCHS Multi Gardens B-17, Islamabad',
-      phone: '+92 300 5195000',
-      whatsapp: '923005195000',
+      phone: '+92 315 5735785',
+      whatsapp: '923155735785',
       email: 'info@binishaqproperties.com',
     },
   ];
 
-  const primaryPhone = siteContent?.company?.phone || '+92 300 5195000';
-  const primaryWhatsapp = siteContent?.company?.whatsapp || '923005195000';
+  const primaryPhone = siteContent?.company?.phone || '+92 315 5735785';
+  const primaryWhatsapp = siteContent?.company?.whatsapp || '923155735785';
   const primaryOffice = offices[0] || {
     city: 'Islamabad Desk (B-17 & Faisal Town)',
     address: 'Commercial Avenue, Block B, MPCHS Multi Gardens B-17, Islamabad',
-    phone: '+92 300 5195000',
+    phone: '+92 315 5735785',
     email: 'info@binishaqproperties.com',
   };
 

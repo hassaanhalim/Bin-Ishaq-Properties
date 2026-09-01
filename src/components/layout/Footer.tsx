@@ -28,8 +28,8 @@ export default function Footer() {
       .catch(() => {});
   }, []);
 
-  const phone = content?.company?.phone || '+92 300 5195000';
-  const whatsapp = content?.company?.whatsapp || '923005195000';
+  const phone = content?.company?.phone || '+92 315 5735785';
+  const whatsapp = content?.company?.whatsapp || '923155735785';
   const email = content?.company?.email || 'info@binishaqproperties.com';
   const address = content?.company?.address || 'Head Office: Faisal Town / MPCHS B-17 Commercial Hub, Islamabad';
 
