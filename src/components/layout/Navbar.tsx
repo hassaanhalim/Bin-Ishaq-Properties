@@ -51,13 +51,7 @@ export default function Navbar() {
   ];
 
   return (
-    <header
-      className={`sticky top-0 z-50 w-full transition-all duration-200 ${
-        isScrolled
-          ? 'bg-[#0B1320]/95 backdrop-blur-md border-b border-slate-800 shadow-md py-3'
-          : 'bg-[#0B1320] border-b border-slate-800 py-3.5'
-      }`}
-    >
+    <header className="sticky top-0 z-50 w-full bg-[#0B1320] border-b border-slate-800 py-3.5 shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-8 flex items-center justify-between">
         {/* Left: Brand Logo */}
         <div className="flex items-center">
@@ -66,14 +60,10 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* Center: Prominent & Bold Navigation Links */}
+        {/* Desktop Navigation Links */}
         <nav className="hidden lg:flex items-center gap-7 text-sm font-bold">
           {navLinks.map((link) => {
-            const isActive =
-              link.href === '/'
-                ? pathname === '/'
-                : pathname.startsWith(link.href);
-
+            const isActive = pathname === link.href;
             return (
               <Link
                 key={link.href}
@@ -90,9 +80,8 @@ export default function Navbar() {
           })}
         </nav>
 
-        {/* Right: Phone, Saved Favorites, & List Property CTA */}
+        {/* Right CTA / Contact Header actions */}
         <div className="hidden sm:flex items-center gap-4">
-          {/* Hotline Contact Phone */}
           <a
             href={`tel:${phone.replace(/\s+/g, '')}`}
             className="flex items-center gap-1.5 text-xs sm:text-sm text-slate-200 hover:text-white transition font-bold"
@@ -101,7 +90,7 @@ export default function Navbar() {
             <span>{phone}</span>
           </a>
 
-          {/* Saved Heart Button */}
+          {/* Saved Badge */}
           <Link
             href="/saved"
             className="relative p-2 bg-[#141E30] hover:bg-[#1E2B45] border border-slate-700 text-slate-200 hover:text-white transition"
@@ -115,7 +104,7 @@ export default function Navbar() {
             )}
           </Link>
 
-          {/* Client Account / Portal */}
+          {/* User Account Portal */}
           <Link
             href="/account"
             className="p-2 bg-[#141E30] hover:bg-[#1E2B45] border border-slate-700 text-slate-200 hover:text-white transition"
@@ -124,7 +113,7 @@ export default function Navbar() {
             <User className="w-4 h-4" />
           </Link>
 
-          {/* List Property Action CTA */}
+          {/* List Property Button */}
           <Link
             href="/submit-property"
             className="bg-white hover:bg-slate-200 text-[#0B1320] font-bold text-xs sm:text-sm px-4 py-2 flex items-center gap-1.5 transition"
@@ -134,7 +123,7 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* Mobile Right Controls: Saved Icon & Hamburger Menu */}
+        {/* Mobile Actions Header */}
         <div className="flex lg:hidden items-center gap-2.5">
           <Link
             href="/account"
@@ -142,19 +131,6 @@ export default function Navbar() {
             title="Client Account"
           >
             <User className="w-4 h-4" />
-          </Link>
-
-          <Link
-            href="/saved"
-            className="relative p-2 bg-[#141E30] border border-slate-700 text-slate-200"
-            title="Saved Properties"
-          >
-            <Heart className="w-4 h-4" />
-            {savedPropertyIds.length > 0 && (
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-white text-black font-extrabold text-[9px] flex items-center justify-center">
-                {savedPropertyIds.length}
-              </span>
-            )}
           </Link>
 
           <button

@@ -10,17 +10,28 @@ import HeroSearch from '@/components/home/HeroSearch';
 import { HOUSING_SOCIETIES } from '@/data/locations';
 import {
   ChevronRight,
+  ChevronDown,
+  ChevronUp,
   ShieldCheck,
   Building,
   CheckCircle2,
   ArrowRight,
   Sparkles,
+  Layers,
 } from 'lucide-react';
 
 export default function HomePage() {
   const [properties, setProperties] = useState<Property[]>([]);
   const [siteContent, setSiteContent] = useState<SiteContent | null>(null);
   const [loading, setLoading] = useState(true);
+  const [expandedSocieties, setExpandedSocieties] = useState<{ [key: string]: boolean }>({});
+
+  const toggleSociety = (id: string) => {
+    setExpandedSocieties((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
 
   useEffect(() => {
     async function loadData() {
@@ -149,77 +160,122 @@ export default function HomePage() {
             </p>
           </div>
 
-          {/* Location Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {HOUSING_SOCIETIES.slice(0, 6).map((society) => (
-              <div
-                key={society.id}
-                className="bg-white border border-slate-300 flex flex-col justify-between group overflow-hidden shadow-sm hover:shadow-md transition-shadow"
-              >
-                {/* Image */}
-                <div className="relative aspect-[16/10] overflow-hidden bg-slate-900">
-                  <Image
-                    src={society.image}
-                    alt={society.name}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B1320]/90 via-[#0B1320]/30 to-transparent" />
+          {/* Location Cards Grid (Compact & Expandable) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
+            {HOUSING_SOCIETIES.slice(0, 6).map((society) => {
+              const isExpanded = !!expandedSocieties[society.id];
 
-                  {/* City Badge */}
-                  <div className="absolute top-3 left-3 bg-[#0B1320] text-white text-[11px] font-black uppercase tracking-wider px-3 py-1 border border-white/30">
-                    {society.city}
-                  </div>
-                </div>
+              return (
+                <div
+                  key={society.id}
+                  className="bg-white border border-slate-300 flex flex-col justify-between group overflow-hidden shadow-sm hover:shadow-md transition-all duration-200"
+                >
+                  {/* Image */}
+                  <div className="relative aspect-[16/9] overflow-hidden bg-slate-900">
+                    <Image
+                      src={society.image}
+                      alt={society.name}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0B1320]/90 via-[#0B1320]/30 to-transparent" />
 
-                {/* Body Details */}
-                <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
-                  <div className="space-y-2">
-                    <h3 className="font-serif text-lg sm:text-xl font-bold tracking-[-0.02em] text-slate-950 group-hover:text-black transition">
-                      {society.name}
-                    </h3>
-
-                    {/* Developer Info */}
-                    <div className="flex items-center gap-1.5 text-xs text-slate-700 font-bold bg-slate-100 p-2 border border-slate-200">
-                      <Building className="w-3.5 h-3.5 text-slate-600 shrink-0" />
-                      <span className="truncate">Developer: {society.developer}</span>
+                    {/* City Badge */}
+                    <div className="absolute top-3 left-3 bg-[#0B1320] text-white text-[11px] font-black uppercase tracking-wider px-3 py-1 border border-white/30">
+                      {society.city}
                     </div>
+                  </div>
 
-                    <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
-                      {society.description}
-                    </p>
+                  {/* Body Details */}
+                  <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
+                    <div className="space-y-2">
+                      <h3 className="font-serif text-lg sm:text-xl font-bold tracking-[-0.02em] text-slate-950 group-hover:text-black transition">
+                        {society.name}
+                      </h3>
 
-                    {/* Available Categories */}
-                    <div className="pt-2">
-                      <span className="text-[10px] uppercase font-bold text-slate-500 block mb-1.5 tracking-wider">
-                        Available Categories:
-                      </span>
-                      <div className="flex flex-wrap gap-1.5">
-                        {society.categories.map((cat, idx) => (
-                          <span
-                            key={idx}
-                            className="bg-slate-200/80 text-slate-800 text-[11px] font-bold px-2 py-0.5"
-                          >
-                            {cat}
-                          </span>
-                        ))}
+                      {/* Developer Info */}
+                      <div className="flex items-center gap-1.5 text-xs text-slate-700 font-bold bg-slate-100 px-2.5 py-1.5 border border-slate-200">
+                        <Building className="w-3.5 h-3.5 text-slate-600 shrink-0" />
+                        <span className="truncate">Developer: {society.developer}</span>
                       </div>
+
+                      {/* Expand / Collapse Details Toggle */}
+                      <button
+                        type="button"
+                        onClick={() => toggleSociety(society.id)}
+                        className="w-full text-xs font-bold text-slate-700 hover:text-black py-1.5 flex items-center justify-between border-t border-slate-100 transition cursor-pointer select-none"
+                      >
+                        <span className="flex items-center gap-1.5">
+                          <Layers className="w-3.5 h-3.5 text-slate-500" />
+                          <span>{isExpanded ? 'Hide Details' : 'Show Details & Categories'}</span>
+                        </span>
+                        {isExpanded ? (
+                          <ChevronUp className="w-4 h-4 text-slate-600" />
+                        ) : (
+                          <ChevronDown className="w-4 h-4 text-slate-600" />
+                        )}
+                      </button>
+
+                      {/* Expanded Section */}
+                      {isExpanded && (
+                        <div className="pt-2 space-y-3 border-t border-slate-200 animate-in fade-in duration-200">
+                          <p className="text-xs text-slate-600 leading-relaxed">
+                            {society.description}
+                          </p>
+
+                          {/* Available Categories */}
+                          <div>
+                            <span className="text-[10px] uppercase font-bold text-slate-500 block mb-1.5 tracking-wider">
+                              Available Categories:
+                            </span>
+                            <div className="flex flex-wrap gap-1.5">
+                              {society.categories.map((cat, idx) => (
+                                <span
+                                  key={idx}
+                                  className="bg-slate-100 border border-slate-200 text-slate-800 text-[10.5px] font-bold px-2 py-0.5"
+                                >
+                                  {cat}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Sectors */}
+                          {society.sectors && society.sectors.length > 0 && (
+                            <div>
+                              <span className="text-[10px] uppercase font-bold text-slate-500 block mb-1.5 tracking-wider">
+                                Prime Blocks / Sectors:
+                              </span>
+                              <div className="flex flex-wrap gap-1">
+                                {society.sectors.map((sec, idx) => (
+                                  <span
+                                    key={idx}
+                                    className="bg-white border border-slate-200 text-slate-600 text-[10px] px-1.5 py-0.5"
+                                  >
+                                    {sec}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* CTA Action */}
+                    <div className="pt-2 border-t border-slate-200">
+                      <Link
+                        href={`/properties?society=${encodeURIComponent(society.name)}`}
+                        className="w-full bg-[#0B1320] hover:bg-black text-white text-xs font-bold py-2.5 px-4 flex items-center justify-center gap-2 transition cursor-pointer"
+                      >
+                        <span>Explore Society Inventory</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
                     </div>
                   </div>
-
-                  {/* CTA Action */}
-                  <div className="pt-3 border-t border-slate-200 flex items-center justify-between">
-                    <Link
-                      href={`/properties?society=${encodeURIComponent(society.name)}`}
-                      className="w-full bg-[#0B1320] hover:bg-black text-white text-xs font-bold py-2.5 px-4 flex items-center justify-center gap-2 transition"
-                    >
-                      <span>Explore Society Inventory</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="text-center mt-10">
