@@ -161,8 +161,7 @@ export const DEFAULT_SITE_CONTENT: SiteContent = {
   hero: {
     title: 'Find Your Dream Property in',
     highlightText: 'Prime Locations',
-    subtitle:
-      'Explore premier residential plots, luxury houses, modern apartments, and commercial properties across top housing societies in Islamabad & Rawalpindi.',
+    subtitle: '',
     bgImageUrl:
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2200&q=90',
     ctaText: 'Explore Society Portfolios',

@@ -107,7 +107,7 @@ export default function HomePage() {
   return (
     <div className="bg-white text-slate-950 min-h-screen font-sans">
       {/* 1. HERO SECTION (Full Viewport Dark Blue) */}
-      <section className="relative z-20 architectural-grid text-white min-h-[calc(100vh-64px)] min-h-[calc(100svh-64px)] flex flex-col justify-center py-10 sm:py-16 px-4 sm:px-8">
+      <section className="relative z-20 architectural-grid text-white min-h-[calc(100vh-140px)] min-h-[calc(100svh-140px)] flex flex-col justify-center py-4 sm:py-16 px-4 sm:px-8">
         {/* Dynamic Background Image */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <Image
@@ -127,19 +127,15 @@ export default function HomePage() {
 
         <div className="relative z-20 max-w-7xl mx-auto w-full">
           {/* Top Hero Text */}
-          <div className="max-w-4xl space-y-2.5 sm:space-y-3 pb-6 sm:pb-8">
-            <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold tracking-[-0.02em] text-white leading-[1.12]">
-              {hero.title} <br />
+          <div className="max-w-4xl pb-3 sm:pb-6">
+            <h1 className="font-serif text-2xl sm:text-4xl lg:text-5xl font-bold tracking-[-0.02em] text-white leading-tight">
+              {hero.title} <br className="hidden sm:inline" />
               <span className="text-slate-100">{hero.highlightText}</span>
             </h1>
-
-            <p className="text-slate-200 text-sm sm:text-base max-w-2xl font-medium leading-relaxed">
-              {hero.subtitle}
-            </p>
           </div>
 
           {/* Sharp Search Console */}
-          <div className="relative z-30 pt-1">
+          <div className="relative z-30">
             <HeroSearch />
           </div>
         </div>
