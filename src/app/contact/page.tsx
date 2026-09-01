@@ -38,37 +38,21 @@ export default function ContactPage() {
   const offices = siteContent?.offices || [
     {
       id: '1',
-      city: 'Karachi (Main Headquarters)',
-      address: 'Executive Tower 1, Khayaban-e-Shamsheer, DHA Phase 5, Karachi',
-      phone: '+92 321 2588 222',
-      whatsapp: '+92 321 2588 222',
-      email: 'karachi@binishaqrealestate.com',
-    },
-    {
-      id: '2',
-      city: 'Islamabad Regional Desk',
-      address: 'Beverly Centre, Blue Area, F-7 / G-7, Islamabad',
-      phone: '+92 321 2588 222',
-      whatsapp: '+92 321 2588 222',
-      email: 'islamabad@binishaqrealestate.com',
-    },
-    {
-      id: '3',
-      city: 'Lahore Advisory Branch',
-      address: 'Pace Tower, Main Boulevard, Gulberg III, Lahore',
-      phone: '+92 321 2588 222',
-      whatsapp: '+92 321 2588 222',
-      email: 'lahore@binishaqrealestate.com',
+      city: 'Islamabad Desk (B-17 & Faisal Town)',
+      address: 'Commercial Avenue, Block B, MPCHS Multi Gardens B-17, Islamabad',
+      phone: '+92 300 5195000',
+      whatsapp: '923005195000',
+      email: 'info@binishaqproperties.com',
     },
   ];
 
-  const primaryPhone = siteContent?.company?.phone || '+92 321 2588 222';
-  const primaryWhatsapp = siteContent?.company?.whatsapp || '+92 321 2588 222';
+  const primaryPhone = siteContent?.company?.phone || '+92 300 5195000';
+  const primaryWhatsapp = siteContent?.company?.whatsapp || '923005195000';
   const primaryOffice = offices[0] || {
     city: 'Islamabad Desk (B-17 & Faisal Town)',
     address: 'Commercial Avenue, Block B, MPCHS Multi Gardens B-17, Islamabad',
-    phone: '+92 321 2588 222',
-    email: 'islamabad@binishaqrealestate.com',
+    phone: '+92 300 5195000',
+    email: 'info@binishaqproperties.com',
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

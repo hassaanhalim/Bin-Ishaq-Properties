@@ -3,6 +3,9 @@ import { getSiteContent, updateSiteContent } from '@/lib/db';
 import { supabaseAdmin } from '@/lib/supabase/server';
 import { SiteContent } from '@/types/siteContent';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function GET() {
   try {
     const { data, error } = await supabaseAdmin
@@ -15,20 +18,30 @@ export async function GET() {
       const defaultContent = getSiteContent();
       const content: SiteContent = {
         ...defaultContent,
-        company: data.company || defaultContent.company,
-        hero: data.hero || defaultContent.hero,
-        searchFilter: data.search_filter || defaultContent.searchFilter,
-        footer: data.footer || defaultContent.footer,
+        ...(data.content || {}),
+        company: data.company || data.content?.company || defaultContent.company,
+        hero: data.hero || data.content?.hero || defaultContent.hero,
+        searchFilter: data.search_filter || data.searchFilter || data.content?.searchFilter || defaultContent.searchFilter,
+        footer: data.footer || data.content?.footer || defaultContent.footer,
+        offices: data.offices || data.content?.offices || defaultContent.offices,
+        whyChoose: data.why_choose || data.whyChoose || data.content?.whyChoose || defaultContent.whyChoose,
+        about: data.about || data.content?.about || defaultContent.about,
         updatedAt: data.updated_at || defaultContent.updatedAt,
       };
-      return NextResponse.json({ success: true, data: content });
+      return NextResponse.json(
+        { success: true, data: content },
+        { headers: { 'Cache-Control': 'no-store, max-age=0, must-revalidate' } }
+      );
     }
   } catch (err) {
     console.warn('Supabase site content fetch error:', err);
   }
 
   const content = getSiteContent();
-  return NextResponse.json({ success: true, data: content });
+  return NextResponse.json(
+    { success: true, data: content },
+    { headers: { 'Cache-Control': 'no-store, max-age=0, must-revalidate' } }
+  );
 }
 
 export async function PUT(req: NextRequest) {
@@ -36,28 +49,50 @@ export async function PUT(req: NextRequest) {
     const body = await req.json();
     const updated = updateSiteContent(body);
 
+    let savedToSupabase = false;
+    let dbError: string | null = null;
+
     try {
-      await supabaseAdmin.from('site_content').upsert({
+      const { error } = await supabaseAdmin.from('site_content').upsert({
         id: 'current',
+        content: updated,
         company: updated.company,
         hero: updated.hero,
         search_filter: updated.searchFilter,
         footer: updated.footer,
+        offices: updated.offices,
+        why_choose: updated.whyChoose,
+        about: updated.about,
         updated_at: new Date().toISOString(),
       });
-    } catch (err) {
-      console.warn('Supabase site content upsert error:', err);
+
+      if (error) {
+        dbError = error.message;
+        console.warn('Supabase site content upsert error:', error.message);
+      } else {
+        savedToSupabase = true;
+      }
+    } catch (err: any) {
+      dbError = err?.message || 'Database error';
+      console.warn('Supabase site content upsert exception:', err);
     }
 
-    return NextResponse.json({
-      success: true,
-      message: 'Site content updated successfully in database',
-      data: updated,
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        message: savedToSupabase
+          ? 'Site content updated successfully in database'
+          : 'Site content updated in memory (ensure Supabase table "site_content" exists)',
+        savedToDb: savedToSupabase,
+        dbError,
+        data: updated,
+      },
+      { headers: { 'Cache-Control': 'no-store, max-age=0, must-revalidate' } }
+    );
   } catch (error: any) {
     return NextResponse.json(
       { success: false, message: error.message },
-      { status: 500 }
+      { status: 500, headers: { 'Cache-Control': 'no-store, max-age=0' } }
     );
   }
 }

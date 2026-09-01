@@ -28,14 +28,14 @@ export default function Footer() {
       .catch(() => {});
   }, []);
 
-  const phone = content?.company?.phone || '+92 321 2588 222';
-  const whatsapp = content?.company?.whatsapp || '+92 321 2588 222';
-  const email = content?.company?.email || 'concierge@binishaqrealestate.com';
-  const address = content?.company?.address || 'Main Markaz, Sector F-7 / Blue Area, Islamabad';
+  const phone = content?.company?.phone || '+92 300 5195000';
+  const whatsapp = content?.company?.whatsapp || '923005195000';
+  const email = content?.company?.email || 'info@binishaqproperties.com';
+  const address = content?.company?.address || 'Head Office: Faisal Town / MPCHS B-17 Commercial Hub, Islamabad';
 
   const brandDescription =
     content?.footer?.brandDescription ||
-    'Bin Ishaq Real Estate — Authorized property dealer & advisory for Pakistan’s leading housing societies. Delivering verified plots, transparent developer transfers, and high-growth investment guidance in Islamabad and Rawalpindi.';
+    'Bin Ishaq Properties — Authorized property dealer & advisory for Pakistan’s leading housing societies. Delivering verified plots, transparent developer transfers, and high-growth investment guidance in Islamabad and Rawalpindi.';
 
   const trustBadges = content?.footer?.trustBadges || [
     {
